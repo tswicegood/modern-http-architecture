@@ -39,27 +39,400 @@
           <h1>Modern HTTP Architecture</h1>
           <h3>HTTP ALL THE THINGS!</h3>
           <p>
-            <small>Created by <a href="http://travisswicegod.com">Travis Swicegood</a> / <a href="http://twitter.com/tswicegood">@tswicegood</a></small>
+            <small>A talk by <a href="http://travisswicegod.com">Travis Swicegood</a> / <a href="http://twitter.com/tswicegood">@tswicegood</a></small>
           </p>
         </section>
 
         <section>
-          <h2>Title Here</h2>
-          <p>
-            Text!
-          </p>
+          <section>
+            <h1>House Keeping</h1>
+          </section>
 
-          <aside class="notes">
-            Notes
-          </aside>
+          <section>
+            <h2>Questions: Ask Them</h2>
+          </section>
+
+          <section>
+            <h2>Twitter!</h2>
+            <p>
+              <a href="http://twitter.com/tswicegood">@tswicegood</a> |
+              <a href="https://twitter.com/search/realtime?q=%23modhttp">#modhttp</a>
+            </p>
+          </section>
+
+          <section>
+            <h2>Slides are Online</h2>
+            <p>Link at the end, so hold your horses</p>
+          </section>
         </section>
 
+        <section>
+          <section>
+            <h1>What's it about?</h1>
+          </section>
+
+          <section>
+            <h2>Web/HTTP</h2>
+          </section>
+
+          <section>
+            <h2>Theory</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>What it's not</h1>
+          </section>
+
+          <section>
+            <h2>No Cookbooks</h2>
+          </section>
+
+          <section>
+            <h2>No Particular Language</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>HTTP</h1>
+          </section>
+
+          <section>
+            <h2>Hyper Text Transfer Protocol</h2>
+
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section>
+            <h2>For Transferring Hyper Text</h2>
+          </section>
+
+          <section>
+            <h2>Sorta…</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Not just for HTML anymore</h1>
+          </section>
+
+          <section>
+            <h2>XML-RPC</h2>
+
+            <p><a href="http://en.wikipedia.org/wiki/XML-RPC">Wikipedia</a></p>
+            <aside class="notes">
+              Please don't use this.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Simple Object <span class="nowrap">Access Protocol</span></h2>
+            <p>
+              <a href="http://en.wikipedia.org/wiki/SOAP">Wikipedia</a>
+            </p>
+
+            <aside class="notes">
+              Or this...
+            </aside>
+          </section>
+
+          <section data-state="alert">
+            <h2>Seriously, don't use those.</h2>
+          </section>
+
+          <section>
+            <h2>XMPP</h2>
+            <p>Jabber™</p>
+          </section>
+
+          <section>
+            <h2>JSON, anyone?</h2>
+          </section>
+
+          <section>
+            <h2>WebSockets</h2>
+
+            <p>
+              They're <em>kinda</em> HTTP.
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Traditional Architecture</h1>
+          </section>
+
+          <section>
+            <h2>One Server</h2>
+            <img src="./images/basic-server.svg">
+
+            <aside class="notes">
+              This is where everyone starts.  You have one server, it takes a
+              request, processes it, then sends it back to the user.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Server Pool</h2>
+            <img src="./images/multi-server.svg">
+
+            <aside class="notes">
+              <p>
+                Next, people end up here.  This is probably familiar to those who've
+                used systems with a supervisor model.  Most popular setup is Nginx to
+                (G)Unicorn and either Django or Rails.
+              </p>
+
+              <p>
+                Note that the app servers don't necessarily have to be on different
+                machines.  You could run one server with 5 workers.  You can also run
+                5 servers with 5 workers each, or any other combination that might make
+                sense for your needs.
+              </p>
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Benefits</h1>
+          </section>
+
+          <section>
+            <h2>Easy to scale</h2>
+
+            <aside class="notes">
+              We've been doing this for years.  It's a well-worn path.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Predictable</h2>
+
+            <aside class="notes">
+              N servers to M users.  Need to handle more M*2 users?  Use N*2 servers.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>What's wrong <span class="nowrap">with this?</span></h1>
+          </section>
+
+          <section>
+            <h2>Efficient Scaling?</h2>
+
+            <aside class="notes">
+              You have to scale <em>everything</em>.  What if it's just one small part
+              of your application that needs to handle massive load?  Why scale up the
+              resources to build everything when that's all you need?
+            </aside>
+          </section>
+
+          <section>
+            <h2>One Application Server</h2>
+
+            <aside class="notes">
+              <p>
+                Monolithic systems suck.  One server that does everything means you need
+                everything in order to test everything.  There's no separation of concerns
+                so to make changes to your users, you need to have a working search index
+                so everything starts up.
+              </p>
+
+              <p>
+                That doesn't even mention trying to deal with clients with needs other
+                than browsers.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>What Happens Here?</h2>
+            <img src="./images/multi-server-fail.svg">
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Solutions?</h1>
+          </section>
+
+          <section>
+            <h2>Small, Simple, <span style="white-space: nowrap;">Working Together</span></h2>
+          </section>
+
+          <section>
+            <blockquote cite="http://en.wikipedia.org/wiki/Unix_philosophy">
+              Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.
+            </blockquote>
+          </section>
+
+          <section>
+            <blockquote cite="http://en.wikipedia.org/wiki/Unix_philosophy">
+              Write <strike>programs</strike> that do one thing and do it well. Write <strike>programs</strike> to work together. Write <strike>programs</strike> to handle <strike>text streams</strike>, because that is a universal interface.
+            </blockquote>
+          </section>
+
+          <section>
+            <blockquote cite="http://en.wikipedia.org/wiki/Unix_philosophy">
+              Write <em>web services</em> that do one thing and do it well. Write <em>web services</em> to work together. Write <em>web services</em> to handle <em>JSON data</em>, because that is a universal interface.
+            </blockquote>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h1>What's it <span class="nowrap">look like?</span></h1>
+          </section>
+
+          <section>
+            <h2>Old Style</h2>
+            <img src="./images/monolithic-appserver.svg">
+          </section>
+
+          <section>
+            <h2>New Style</h2>
+            <img src="./images/new-style-appserver.svg">
+          </section>
+
+          <section>
+            <h2>Realistic New Style</h2>
+            <img src="./images/new-style-appserver-complete.svg">
+
+            <aside class="notes">
+              Warning: This is messy.  It's not easy.  It's easier to
+              just try to cache your way out of this using other technology,
+              but you're screwed when new devices/clients show up.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>What's it called?</h1>
+          </section>
+
+          <section>
+            <h2>Service Oriented Architecture</h2>
+            <p>SOA: Been around for years</p>
+
+            <aside class="notes">
+              Yes, it sounds enterprise-y.  They adopted it earlier, but
+              they're building systems that are meant to be around for
+              years through lots of change.  Comments about babies and
+              bath water come to mind.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Enterprise Ready!</h2>
+          </section>
+
+          <section>
+            <h2>Don't Be Afraid</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>You Already <span class="nowrap">Use It</span></h1>
+          </section>
+
+          <section>
+            <h2>Did you code <span class="nowrap">your own database?</span></h2>
+          </section>
+
+          <section>
+            <h2>Or your cache server?</h2>
+          </section>
+
+          <section>
+            <h2>Start thinking about <span class="nowrap">your code that way</span></h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Benefits</h1>
+          </section>
+
+          <section>
+            <h2>Replace Services At Will</h2>
+
+            <aside class="notes">
+              Want to put
+            </aside>
+          </section>
+
+          <section>
+            <h2>Use Right Tool</h2>
+          </section>
+
+          <section>
+            <h2>Scale Services Separately</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Implementation Details</h1>
+          </section>
+
+          <section>
+            <h2>Not as Easy</h2>
+          </section>
+
+          <section>
+            <h2>Requires More Planning</h2>
+          </section>
+
+          <section>
+            <h2>Refactoring Isn't Trivial</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>What about HTML?</h1>
+          </section>
+
+          <section>
+            <h2><abbr title="HTML as a Service">HaaS</abbr></h2>
+            <p>HTML as a Service</p>
+          </section>
+
+          <section>
+            <img src="./images/html-service.svg" alt="">
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Further Reading</h1>
+          </section>
+
+          <section>
+            <h2><a href="http://12factor.net/">12 Factor</a></h2>
+          </section>
+
+          <section>
+            <h2>Me!</h2>
+            <p>Ask me about Gunny @ Ginger Man</p>
+          </section>
+        </section>
 
         <section>
           <h1>Questions?</h1>
-          <h3>@tswicegood</h3>
+          <h3><a href="http://twitter.com/tswicegood">@tswicegood</a></h3>
         </section>
-
       </div>
 
     </div>
@@ -78,7 +451,7 @@
         center: true,
 
         theme: 'night', // available themes are in /css/theme
-        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+        transition: 'zoom', // default/cube/page/concave/zoom/linear/fade/none
 
         // Optional libraries used to extend on reveal.js
         dependencies: [
